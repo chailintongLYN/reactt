@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        img{
+            width:100px;
+        }
+    </style>
+</head>
+<body>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+
+    <ul>
+
+    </ul>
+    <script>
+        // 封装渲染列表函数
+        let renderList = (data)=>{
+            let content = ''
+            data.forEach((item,idx)=>{
+                content+=`<li>
+                            <img src='${item.author.avatar_url}'/>
+                            <span class='reply'>${item.reply_count}/${item.visit_count}</span>
+                            <a href="detail.html#${item.id}">${item.title}</a>
+                        </li>`;
+            })
+            $('ul').html(content)
+        }
+        // 页面加载完即 请求第一页数据
+        $.get(
+            'https://cnodejs.org/api/v1/topics',
+            data=>renderList(data.data)
+        )
+        // 点击按钮，实现分页
+        $('button').click(function(){
+            let page = $(this).html();
+            $.get(
+                'https://cnodejs.org/api/v1/topics?page='+page,
+                data=>renderList(data.data)
+            )
+        })
+        
+    </script>
+</body>
+</html>

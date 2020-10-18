@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://static2.cnodejs.org/public/stylesheets/index.min.23a5b1ca.min.css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+    <script>
+        let id = location.hash.slice(1);
+        $.get(
+            'https://cnodejs.org/api/v1/topic/'+id,
+            (data)=>{
+                $('#root').append(
+                    $(`<h1>${data.data.title}</h1>`)
+                )
+                $('#root').append($(data.data.content))
+            }
+        )
+
+    </script>
+</body>
+</html>
